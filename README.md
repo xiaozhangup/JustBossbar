@@ -1,11 +1,5 @@
-# Custom-Nameplates
-A unique way to customize nametags
-
-### How to buy
-
-https://afdian.net/@xiaomomi
-
-https://polymart.org/resource/customnameplates.2543
+# JustBossbar
+A unique way to customize JustBossbar
 
 ### How to compile
 Just compile it with -gradle shadowjar.

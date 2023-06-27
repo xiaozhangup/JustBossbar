@@ -96,7 +96,7 @@ public class BossBarManager extends Function {
                     ConfigUtils.getRequirements(bossBarSection.getConfigurationSection("conditions"))
             ));
         }
-        AdventureUtils.consoleMessage("[CustomNameplates] Loaded <green>" + bossBars.size() + " <gray>bossbars");
+        AdventureUtils.consoleMessage("[JustBossbar] Loaded <green>" + bossBars.size() + " <gray>bossbars");
     }
 
     public LinkedHashMap<String, BossBarConfig> getBossBars() {

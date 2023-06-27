@@ -19,7 +19,6 @@ package net.momirealms.customnameplates.manager;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.momirealms.customnameplates.CustomNameplates;
-import net.momirealms.customnameplates.object.ConditionalText;
 import net.momirealms.customnameplates.object.Function;
 import net.momirealms.customnameplates.object.font.OffsetFont;
 import net.momirealms.customnameplates.object.placeholders.*;
@@ -34,48 +33,38 @@ import java.util.regex.Pattern;
 
 public class PlaceholderManager extends Function {
 
-    private final NameplatePlaceholders nameplatePlaceholders;
     private final Pattern placeholderPattern = Pattern.compile("%([^%]*)%");
     private final HashSet<Integer> descent_fonts;
     private final HashSet<Integer> descent_unicode_fonts;
-    private final HashMap<String, NameplateText> nameplateTextMap;
     private final HashMap<String, BackGroundText> backGroundTextMap;
     private final HashMap<String, StaticText> stringStaticTextMap;
     private final HashMap<String, DescentText> descentTextMap;
     private final HashMap<String, DescentText> descentUnicodeMap;
-    private final HashMap<String, ConditionalTexts> conditionalTextsMap;
     private final HashMap<String, VanillaHud> vanillaHudMap;
     private CustomNameplates plugin;
 
     public PlaceholderManager(CustomNameplates plugin) {
         this.plugin = plugin;
-        this.nameplatePlaceholders = new NameplatePlaceholders(plugin, this);
         this.descent_fonts = new HashSet<>();
         this.descent_unicode_fonts = new HashSet<>();
-        this.nameplateTextMap = new HashMap<>();
         this.backGroundTextMap = new HashMap<>();
         this.stringStaticTextMap = new HashMap<>();
         this.descentTextMap = new HashMap<>();
-        this.conditionalTextsMap = new HashMap<>();
         this.vanillaHudMap = new HashMap<>();
         this.descentUnicodeMap = new HashMap<>();
     }
 
     @Override
     public void load() {
-        this.nameplatePlaceholders.register();
         this.loadConfig();
     }
 
     @Override
     public void unload() {
-        this.nameplatePlaceholders.unregister();
         this.descent_fonts.clear();
-        this.nameplateTextMap.clear();
         this.backGroundTextMap.clear();
         this.stringStaticTextMap.clear();
         this.descentTextMap.clear();
-        this.conditionalTextsMap.clear();
         this.vanillaHudMap.clear();
         this.descent_unicode_fonts.clear();
         this.descentUnicodeMap.clear();
@@ -83,11 +72,6 @@ public class PlaceholderManager extends Function {
 
     private void loadConfig() {
         YamlConfiguration config = ConfigUtils.getConfig("configs" + File.separator + "custom-placeholders.yml");
-
-        ConfigurationSection nameplateSection = config.getConfigurationSection("nameplate-text");
-        if (nameplateSection != null && ConfigManager.enableNameplates) {
-            loadNameplateText(nameplateSection);
-        }
 
         ConfigurationSection backgroundSection = config.getConfigurationSection("background-text");
         if (backgroundSection != null && ConfigManager.enableBackground) {
@@ -102,11 +86,6 @@ public class PlaceholderManager extends Function {
         ConfigurationSection descentSection = config.getConfigurationSection("descent-text");
         if (descentSection != null) {
             loadDescentText(descentSection);
-        }
-
-        ConfigurationSection conditionalSection = config.getConfigurationSection("conditional-text");
-        if (conditionalSection != null) {
-            loadConditionalText(conditionalSection);
         }
 
         ConfigurationSection vanillaHudSection = config.getConfigurationSection("vanilla-hud");
@@ -137,24 +116,6 @@ public class PlaceholderManager extends Function {
         }
     }
 
-    private void loadConditionalText(ConfigurationSection section) {
-        for (String key : section.getKeys(false)) {
-            ConfigurationSection innerSection = section.getConfigurationSection(key);
-            if (innerSection != null) {
-                ArrayList<ConditionalText> conditionalTexts = new ArrayList<>();
-                for (String priority : innerSection.getKeys(false)) {
-                    ConditionalText conditionalText = new ConditionalText(
-                            ConfigUtils.getRequirements(innerSection.getConfigurationSection(priority + ".conditions")),
-                            innerSection.getString(priority + ".text"),
-                            null
-                    );
-                    conditionalTexts.add(conditionalText);
-                }
-                conditionalTextsMap.put(key, new ConditionalTexts(conditionalTexts.toArray(new ConditionalText[0])));
-            }
-        }
-    }
-
     private void loadDescentText(ConfigurationSection section) {
         for (String key : section.getKeys(false)) {
             descent_fonts.add(8 - section.getInt(key + ".descent"));
@@ -172,12 +133,6 @@ public class PlaceholderManager extends Function {
     private void loadStaticText(ConfigurationSection section) {
         for (String key : section.getKeys(false)) {
             stringStaticTextMap.put(key, new StaticText(section.getString(key + ".text"), section.getInt(key + ".value"), StaticText.StaticState.valueOf(section.getString(key + ".position", "left").toUpperCase(Locale.ENGLISH))));
-        }
-    }
-
-    private void loadNameplateText(ConfigurationSection section) {
-        for (String key : section.getKeys(false)) {
-            nameplateTextMap.put(key, new NameplateText(section.getString(key + ".text"), section.getString(key + ".nameplate")));
         }
     }
 
@@ -199,16 +154,8 @@ public class PlaceholderManager extends Function {
         return placeholders;
     }
 
-    public ConditionalTexts getConditionalTexts(String key) {
-        return conditionalTextsMap.get(key);
-    }
-
     public BackGroundText getBackgroundText(String key) {
         return backGroundTextMap.get(key);
-    }
-
-    public NameplateText getNameplateText(String key) {
-        return nameplateTextMap.get(key);
     }
 
     public StaticText getStaticText(String key) {

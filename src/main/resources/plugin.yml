@@ -1,4 +1,4 @@
-name: CustomNameplates
+name: JustBossbar
 version: '${version}'
 main: net.momirealms.customnameplates.CustomNameplates
 api-version: 1.17
@@ -8,19 +8,11 @@ depend:
   - PlaceholderAPI
 softdepend:
   - ItemsAdder
-  - TAB
-  - Oraxen
-  - TrChat
-  - MagicCosmetics
 commands:
   customnameplates:
     usage: /customnameplates
     aliases:
       - nameplates
-  chatbubbles:
-    usage: /chatbubbles
-    aliases:
-      - bubbles
 
 permissions:
   nameplates.*:
@@ -52,30 +44,4 @@ permissions:
   nameplates.list:
     default: true
   nameplates.equip:
-    default: true
-
-  bubbles.*:
-    description: Gives access to all bubbles commands
-    children:
-      bubbles.unequip: true
-      bubbles.equip: true
-      bubbles.help: true
-      bubbles.forceequip: true
-      bubbles.forceunequip: true
-      bubbles.list: true
-      bubbles.use: true
-
-  bubbles.help:
-    default: op
-  bubbles.equip:
-    default: true
-  bubbles.unequip:
-    default: true
-  bubbles.list:
-    default: true
-  bubbles.forceequip:
-    default: op
-  bubbles.forceunequip:
-    default: op
-  bubbles.use:
     default: true

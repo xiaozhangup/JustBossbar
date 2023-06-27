@@ -148,7 +148,7 @@ public class BossBarSender {
             packet.getModifier().write(1, remove.get(null));
             CustomNameplates.getProtocolManager().sendServerPacket(player, packet);
         } catch (ClassNotFoundException e){
-            AdventureUtils.consoleMessage("<red>[CustomNameplates] Failed to remove boss bar for " + player.getName());
+            AdventureUtils.consoleMessage("<red>[JustBossbar] Failed to remove boss bar for " + player.getName());
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }

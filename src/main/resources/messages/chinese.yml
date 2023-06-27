@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#2E8B57:#48D1CC>[CustomNameplates] </gradient>'
+  prefix: '<gradient:#2E8B57:#48D1CC>[JustBossbar] </gradient>'
   no-perm: '<red>你没有权限!</red>'
   lack-args: '<white>参数不足!</white>'
   none-args: '<white>非空参数'

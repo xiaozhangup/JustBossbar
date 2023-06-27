@@ -116,13 +116,7 @@ public class ConfigManager extends Function {
             default_width = section.getInt("default-character-width", 8);
 
         }
-        if (enableNameplates) {
-            YamlConfiguration np_config = ConfigUtils.getConfig("configs" + File.separator + "nameplate.yml");
-            thin_font = np_config.getBoolean("thin-font", false);
-        }
-        else {
-            thin_font = false;
-        }
+        thin_font = false;
     }
 
     public static String getMiniMessageFontTag() {

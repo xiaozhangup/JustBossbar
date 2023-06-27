@@ -23,9 +23,7 @@ import com.google.gson.JsonPrimitive;
 import net.momirealms.customnameplates.CustomNameplates;
 import net.momirealms.customnameplates.object.SimpleChar;
 import net.momirealms.customnameplates.object.background.BackGroundConfig;
-import net.momirealms.customnameplates.object.bubble.BubbleConfig;
 import net.momirealms.customnameplates.object.font.OffsetFont;
-import net.momirealms.customnameplates.object.nameplate.NameplateConfig;
 import net.momirealms.customnameplates.utils.AdventureUtils;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
@@ -50,15 +48,13 @@ public class ResourceManager {
         File font_folder = new File(plugin.getDataFolder(), "ResourcePack" + File.separator + "assets" + File.separator + ConfigManager.namespace + File.separatorChar + "font");
         File textures_folder = new File(plugin.getDataFolder(), "ResourcePack" + File.separator+ "assets" + File.separator + ConfigManager.namespace + File.separatorChar + "textures");
         if (!font_folder.mkdirs() || !textures_folder.mkdirs()) {
-            AdventureUtils.consoleMessage("<red>[CustomNameplates] Error! Failed to generate resource pack folders...</red>");
+            AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to generate resource pack folders...</red>");
             return;
         }
         JsonObject fontJsonObject = new JsonObject();
         JsonArray fontJsonArray = new JsonArray();
         fontJsonObject.add("providers", fontJsonArray);
         this.getOffsetFontEnums().forEach(fontJsonArray::add);
-        this.loadNameplates(fontJsonArray, textures_folder);
-        this.loadBubbles(fontJsonArray, textures_folder);
         this.loadBackgrounds(fontJsonArray, textures_folder);
         this.loadImages(fontJsonArray, textures_folder);
         this.extractDefault();
@@ -76,7 +72,7 @@ public class ResourceManager {
             fileWriter.write(fontJsonObject.toString().replace("\\\\", "\\"));
         }
         catch (IOException e) {
-            AdventureUtils.consoleMessage("<red>[CustomNameplates] Error! Failed to generate font json file.</red>");
+            AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to generate font json file.</red>");
         }
         this.hookCopy(resourcePack_folder);
     }
@@ -91,43 +87,7 @@ public class ResourceManager {
             try {
                 FileUtils.copyFile(new File(plugin.getDataFolder(), "contents" + File.separator + "images" + File.separator + simpleChar.getFile()), new File(textures_file.getPath() + File.separatorChar + ConfigManager.images_folder_path.replace("\\", File.separator) + simpleChar.getFile()));
             } catch (IOException e) {
-                AdventureUtils.consoleMessage("<red>[CustomNameplates] Error! Failed to copy images to resource pack.</red>");
-            }
-        }
-    }
-
-    private void loadNameplates(JsonArray jsonArray, File textures_file) {
-        if (!ConfigManager.enableNameplates) return;
-        for (NameplateConfig nameplateConfig : plugin.getNameplateManager().getNameplateConfigMap().values()) {
-            for (SimpleChar simpleChar : new SimpleChar[]{nameplateConfig.left(), nameplateConfig.middle(), nameplateConfig.right()}) {
-                JsonObject jo_np = new JsonObject();
-                jo_np.add("type", new JsonPrimitive("bitmap"));
-                jo_np.add("file", new JsonPrimitive(ConfigManager.namespace + ":" + ConfigManager.nameplates_folder_path.replaceAll("\\\\", "/") + simpleChar.getFile()));
-                addCharToArray(jsonArray, simpleChar, jo_np);
-                try {
-                    FileUtils.copyFile(new File(plugin.getDataFolder(), "contents" + File.separator + "nameplates" + File.separator + simpleChar.getFile()), new File(textures_file.getPath() + File.separatorChar + ConfigManager.nameplates_folder_path.replace("\\", File.separator) + simpleChar.getFile()));
-                } catch (IOException e) {
-                    AdventureUtils.consoleMessage("<red>[CustomNameplates] Error! Failed to copy nameplates to resource pack.</red>");
-                }
-            }
-        }
-    }
-
-    private void loadBubbles(JsonArray jsonArray, File textures_file) {
-        if (!ConfigManager.enableBubbles) return;
-        for (BubbleConfig bubbleConfig : plugin.getChatBubblesManager().getBubbleConfigMap().values()) {
-            SimpleChar[] simpleChars = new SimpleChar[]{bubbleConfig.left(), bubbleConfig.middle(), bubbleConfig.right(), bubbleConfig.tail()};
-            for (SimpleChar simpleChar : simpleChars) {
-                JsonObject jo_bb = new JsonObject();
-                jo_bb.add("type", new JsonPrimitive("bitmap"));
-                jo_bb.add("file", new JsonPrimitive(ConfigManager.namespace + ":" + ConfigManager.bubbles_folder_path.replaceAll("\\\\","/") + simpleChar.getFile()));
-                addCharToArray(jsonArray, simpleChar, jo_bb);
-                try {
-                    FileUtils.copyFile(new File(plugin.getDataFolder(),"contents" + File.separator + "bubbles" + File.separator + simpleChar.getFile()), new File(textures_file.getPath() + File.separator + ConfigManager.bubbles_folder_path.replace("\\", File.separator) + simpleChar.getFile()));
-                }
-                catch (IOException e){
-                    AdventureUtils.consoleMessage("<red>[CustomNameplates] Error! Failed to copy bubbles to resource pack.</red>");
-                }
+                AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to copy images to resource pack.</red>");
             }
         }
     }
@@ -148,7 +108,7 @@ public class ResourceManager {
                 try {
                     FileUtils.copyFile(new File(plugin.getDataFolder(), "contents" + File.separator + "backgrounds" + File.separator + simpleChar.getFile()), new File(textures_file.getPath() + File.separatorChar + ConfigManager.backgrounds_folder_path.replace("\\", File.separator) + simpleChar.getFile()));
                 } catch (IOException e){
-                    AdventureUtils.consoleMessage("<red>[CustomNameplates] Error! Failed to copy backgrounds to resource pack.</red>");
+                    AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to copy backgrounds to resource pack.</red>");
                 }
             }
         }
@@ -223,7 +183,7 @@ public class ResourceManager {
             }
         }
         if (!ConfigManager.enable1_20_Unicode && plugin.getVersionHelper().isVersionNewerThan1_20()) {
-            AdventureUtils.consoleMessage("<white>[CustomNameplates] For the moment decent unicode is not available on 1.20. You can enable support-1_20-unicodes in config.yml to ignore the limit.");
+            AdventureUtils.consoleMessage("<white>[JustBossbar] For the moment decent unicode is not available on 1.20. You can enable support-1_20-unicodes in config.yml to ignore the limit.");
             return;
         }
         for (int ascent : plugin.getPlaceholderManager().getDescent_unicode_fonts()) {
@@ -269,7 +229,7 @@ public class ResourceManager {
             }
             catch (IOException e){
                 e.printStackTrace();
-                AdventureUtils.consoleMessage("<red>[CustomNameplates] Error! Failed to delete the generated folder...</red>" );
+                AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to delete the generated folder...</red>" );
             }
         }
     }
@@ -316,7 +276,7 @@ public class ResourceManager {
                 file.delete();
             }
         } catch (IOException e){
-            AdventureUtils.consoleMessage("<red>[CustomNameplates] Error! Failed to copy space_split.png to resource pack...</red>");
+            AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to copy space_split.png to resource pack...</red>");
         }
     }
 
@@ -327,7 +287,7 @@ public class ResourceManager {
             }
             catch (IOException e){
                 e.printStackTrace();
-                AdventureUtils.consoleMessage("<red>[CustomNameplates] Error! Failed to copy files to ItemsAdder...</red>");
+                AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to copy files to ItemsAdder...</red>");
             }
         }
         if (ConfigManager.oraxenHook){
@@ -336,7 +296,7 @@ public class ResourceManager {
             }
             catch (IOException e){
                 e.printStackTrace();
-                AdventureUtils.consoleMessage("<red>[CustomNameplates] Error! Failed to copy files to Oraxen...</red>");
+                AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to copy files to Oraxen...</red>");
             }
         }
     }

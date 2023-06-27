@@ -17,8 +17,6 @@
 
 package net.momirealms.customnameplates.command;
 
-import net.momirealms.customnameplates.CustomNameplates;
-import net.momirealms.customnameplates.api.CustomNameplatesAPI;
 import net.momirealms.customnameplates.manager.MessageManager;
 import net.momirealms.customnameplates.utils.AdventureUtils;
 import org.bukkit.Bukkit;
@@ -86,29 +84,6 @@ public abstract class AbstractSubCommand {
 
     protected List<String> online_players() {
         return Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toList());
-    }
-
-    protected List<String> allNameplates() {
-        return new ArrayList<>(CustomNameplates.getInstance().getNameplateManager().getNameplateConfigMap().keySet());
-    }
-
-    protected List<String> allBubbles() {
-        return new ArrayList<>(CustomNameplates.getInstance().getChatBubblesManager().getBubbleConfigMap().keySet());
-    }
-
-    protected boolean notExist(CommandSender commandSender, String type, String value) {
-        if (type.equals("nameplate")) {
-            if (!CustomNameplatesAPI.getInstance().doesNameplateExist(value)) {
-                AdventureUtils.sendMessage(commandSender, MessageManager.prefix + MessageManager.np_not_exist);
-                return true;
-            }
-        } else if (type.equals("bubble")) {
-            if (!CustomNameplatesAPI.getInstance().doesBubbleExist(value)) {
-                AdventureUtils.sendMessage(commandSender, MessageManager.prefix + MessageManager.bb_not_exist);
-                return true;
-            }
-        }
-        return false;
     }
 
     protected boolean noConsoleExecute(CommandSender commandSender) {

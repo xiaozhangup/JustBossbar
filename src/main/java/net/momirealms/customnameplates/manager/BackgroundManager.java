@@ -86,7 +86,7 @@ public class BackgroundManager extends Function {
                     config.getInt("left-margin", 1), config.getInt("right-margin", 1)))
             ;
         }
-        AdventureUtils.consoleMessage("[CustomNameplates] Loaded <green>" + backGroundConfigMap.size() + " <gray>backgrounds");
+        AdventureUtils.consoleMessage("[JustBossbar] Loaded <green>" + backGroundConfigMap.size() + " <gray>backgrounds");
     }
 
     public HashMap<String, BackGroundConfig> getBackGroundConfigMap() {

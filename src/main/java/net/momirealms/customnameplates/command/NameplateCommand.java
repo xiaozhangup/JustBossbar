@@ -29,13 +29,6 @@ public class NameplateCommand extends AbstractMainCommand {
 
     private void regDefaultSubCommands() {
         regSubCommand(ReloadCommand.INSTANCE);
-        regSubCommand(NameplatesEquipCommand.INSTANCE);
-        regSubCommand(NameplatesForceEquipCommand.INSTANCE);
-        regSubCommand(NameplatesUnequipCommand.INSTANCE);
-        regSubCommand(NameplatesForceUnequipCommand.INSTANCE);
-        regSubCommand(PreviewCommand.INSTANCE);
-        regSubCommand(ForcePreviewCommand.INSTANCE);
-        regSubCommand(NameplatesListCommand.INSTANCE);
         regSubCommand(HelpCommand.INSTANCE);
         regSubCommand(AboutCommand.INSTANCE);
     }

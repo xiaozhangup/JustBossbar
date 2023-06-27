@@ -25,7 +25,6 @@ import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
 import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import net.momirealms.customnameplates.CustomNameplates;
 import net.momirealms.customnameplates.helper.Log;
-import net.momirealms.customnameplates.object.carrier.TextDisplayMeta;
 import net.momirealms.customnameplates.object.requirements.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -65,11 +64,11 @@ public class ConfigUtils {
             try {
                 file.getParentFile().mkdirs();
                 if (!file.createNewFile()) {
-                    AdventureUtils.consoleMessage("<red>[CustomNameplates] Failed to generate data files!</red>");
+                    AdventureUtils.consoleMessage("<red>[JustBossbar] Failed to generate data files!</red>");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                AdventureUtils.consoleMessage("<red>[CustomNameplates] Failed to generate data files!</red>");
+                AdventureUtils.consoleMessage("<red>[JustBossbar] Failed to generate data files!</red>");
             }
         }
         return YamlConfiguration.loadConfiguration(file);
@@ -92,17 +91,6 @@ public class ConfigUtils {
             }
         }
         return requirements.toArray(new Requirement[0]);
-    }
-
-    public static TextDisplayMeta getTextDisplayMeta(ConfigurationSection section) {
-        if (section == null) return TextDisplayMeta.defaultValue;
-        return new TextDisplayMeta(
-                section.getBoolean("has-shadow", false),
-                section.getBoolean("is-see-through", false),
-                section.getBoolean("use-default-background-color", false),
-                ConfigUtils.rgbToDecimal(section.getString("background-color", "0,0,0,128")),
-                (byte) section.getInt("text-opacity")
-        );
     }
 
     public static int rgbToDecimal(String rgba) {

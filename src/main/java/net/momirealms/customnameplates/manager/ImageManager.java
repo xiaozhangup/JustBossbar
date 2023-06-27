@@ -73,7 +73,7 @@ public class ImageManager extends Function {
             SimpleChar simpleChar = new SimpleChar(config.getInt("height"), config.getInt("ascent"), config.getInt("width"), img, config.getString("image") + ".png");
             characterMap.put(key, simpleChar);
         }
-        AdventureUtils.consoleMessage("[CustomNameplates] Loaded <green>" + characterMap.size() + " <gray>images");
+        AdventureUtils.consoleMessage("[JustBossbar] Loaded <green>" + characterMap.size() + " <gray>images");
     }
 
     private void saveDefaultImages() {
