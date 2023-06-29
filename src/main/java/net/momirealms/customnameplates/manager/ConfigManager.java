@@ -42,7 +42,6 @@ public class ConfigManager extends Function {
     public static boolean oraxenHook;
     public static boolean trChat_Hook;
     public static boolean ventureChat_Hook;
-    public static boolean extractShader;
     public static boolean extractBars;
     public static char start_char;
     public static boolean checkUpdate;
@@ -92,7 +91,6 @@ public class ConfigManager extends Function {
             backgrounds_folder_path = section.getString("image-path.backgrounds","font\\backgrounds\\");
             space_split_folder_path = section.getString("image-path.space-split","font\\base\\");
             images_folder_path = section.getString("image-path.images","font\\images\\");
-            extractShader = section.getBoolean("extract-shader",true);
             extractBars = section.getBoolean("extract-bar-image",true);
             enable1_20_Unicode = section.getBoolean("support-1_20-unicodes",false);
         }

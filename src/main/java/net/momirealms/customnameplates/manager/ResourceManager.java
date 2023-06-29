@@ -75,7 +75,6 @@ public class ResourceManager {
             AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to generate font json file.</red>");
         }
         this.hookCopy(resourcePack_folder);
-
     }
 
     private void loadImages(JsonArray jsonArray, File textures_file) {
@@ -125,12 +124,6 @@ public class ResourceManager {
     }
 
     private void extractDefault() {
-        if (ConfigManager.extractShader) {
-            String path = "ResourcePack" + File.separator + "assets" + File.separator + "minecraft" + File.separator + "shaders" + File.separator + "core" + File.separator;
-            plugin.saveResource(path + "rendertype_text.fsh", true);
-            plugin.saveResource(path + "rendertype_text.json", true);
-            plugin.saveResource(path + "rendertype_text.vsh", true);
-        }
         if (ConfigManager.extractBars) {
             String path = "ResourcePack" + File.separator + "assets" + File.separator + "minecraft" + File.separator + "textures" + File.separator + "gui" + File.separator;
             plugin.saveResource(path + "bars.png", true);

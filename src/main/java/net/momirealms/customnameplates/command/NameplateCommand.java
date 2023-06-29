@@ -30,6 +30,5 @@ public class NameplateCommand extends AbstractMainCommand {
     private void regDefaultSubCommands() {
         regSubCommand(ReloadCommand.INSTANCE);
         regSubCommand(HelpCommand.INSTANCE);
-        regSubCommand(AboutCommand.INSTANCE);
     }
 }

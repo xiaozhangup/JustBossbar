@@ -23,16 +23,12 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.momirealms.customnameplates.command.NameplateCommand;
-import net.momirealms.customnameplates.helper.LibraryLoader;
 import net.momirealms.customnameplates.helper.VersionHelper;
 import net.momirealms.customnameplates.manager.*;
 import net.momirealms.customnameplates.utils.AdventureUtils;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.TimeZone;
 
 public final class CustomNameplates extends JavaPlugin {
 
@@ -52,7 +48,6 @@ public final class CustomNameplates extends JavaPlugin {
     @Override
     public void onLoad(){
         plugin = this;
-        loadLibs();
     }
 
     @Override
@@ -73,7 +68,6 @@ public final class CustomNameplates extends JavaPlugin {
         this.registerCommands();
         this.reload();
         AdventureUtils.consoleMessage("[JustBossbar] Plugin Enabled!");
-        if (ConfigManager.enableBStats) new Metrics(this, 16649);
         if (ConfigManager.checkUpdate) this.versionHelper.checkUpdate();
     }
 
@@ -85,17 +79,6 @@ public final class CustomNameplates extends JavaPlugin {
         if (imageManager != null) imageManager.unload();
         if (backgroundManager != null) backgroundManager.unload();
         if (adventure != null) adventure.close();
-    }
-
-    private void loadLibs() {
-        TimeZone timeZone = TimeZone.getDefault();
-        String libRepo = timeZone.getID().startsWith("Asia") ? "https://maven.aliyun.com/repository/public/" : "https://repo.maven.apache.org/maven2/";
-        LibraryLoader.load("commons-io","commons-io","2.11.0", libRepo);
-        LibraryLoader.load("org.apache.commons","commons-lang3","3.12.0", libRepo);
-        LibraryLoader.load("com.zaxxer","HikariCP","5.0.1", libRepo);
-        LibraryLoader.load("dev.dejvokep","boosted-yaml","1.3", libRepo);
-        LibraryLoader.load("org.mariadb.jdbc","mariadb-java-client","3.1.2", libRepo);
-        LibraryLoader.load("mysql","mysql-connector-java","8.0.30", libRepo);
     }
 
     private void registerCommands() {

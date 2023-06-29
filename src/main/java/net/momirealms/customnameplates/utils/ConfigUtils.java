@@ -79,7 +79,6 @@ public class ConfigUtils {
         if (section != null) {
             for (String type : section.getKeys(false)) {
                 switch (type) {
-                    case "biome" -> requirements.add(new BiomeImpl(new HashSet<>(section.getStringList(type))));
                     case "weather" -> requirements.add(new WeatherImpl(section.getStringList(type)));
                     case "ypos" -> requirements.add(new YPosImpl(section.getStringList(type)));
                     case "world" -> requirements.add(new WorldImpl(section.getStringList(type)));

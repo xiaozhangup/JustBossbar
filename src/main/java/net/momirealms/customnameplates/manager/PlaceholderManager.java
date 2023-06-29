@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 
 public class PlaceholderManager extends Function {
 
+    private final NameplatePlaceholders nameplatePlaceholders;
     private final Pattern placeholderPattern = Pattern.compile("%([^%]*)%");
     private final HashSet<Integer> descent_fonts;
     private final HashSet<Integer> descent_unicode_fonts;
@@ -45,6 +46,7 @@ public class PlaceholderManager extends Function {
 
     public PlaceholderManager(CustomNameplates plugin) {
         this.plugin = plugin;
+        this.nameplatePlaceholders = new NameplatePlaceholders(plugin, this);
         this.descent_fonts = new HashSet<>();
         this.descent_unicode_fonts = new HashSet<>();
         this.backGroundTextMap = new HashMap<>();
@@ -56,11 +58,13 @@ public class PlaceholderManager extends Function {
 
     @Override
     public void load() {
+        this.nameplatePlaceholders.register();
         this.loadConfig();
     }
 
     @Override
     public void unload() {
+        this.nameplatePlaceholders.unregister();
         this.descent_fonts.clear();
         this.backGroundTextMap.clear();
         this.stringStaticTextMap.clear();

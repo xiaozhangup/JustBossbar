@@ -8,6 +8,10 @@ depend:
   - PlaceholderAPI
 softdepend:
   - ItemsAdder
+
+libraries:
+  - dev.dejvokep:boosted-yaml:1.3
+
 commands:
   customnameplates:
     usage: /customnameplates
@@ -19,29 +23,9 @@ permissions:
     description: Gives access to all nameplates commands
     children:
       nameplates.reload: true
-      nameplates.forceequip: true
-      nameplates.forceunequip: true
       nameplates.help: true
-      nameplates.unequip: true
-      nameplates.preview: true
-      nameplates.list: true
-      nameplates.about: true
 
   nameplates.reload:
     default: op
-  nameplates.forceequip:
-    default: op
-  nameplates.forceunequip:
-    default: op
   nameplates.help:
     default: op
-  nameplates.about:
-    default: op
-  nameplates.unequip:
-    default: true
-  nameplates.preview:
-    default: true
-  nameplates.list:
-    default: true
-  nameplates.equip:
-    default: true
