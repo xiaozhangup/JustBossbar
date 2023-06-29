@@ -75,6 +75,7 @@ public class ResourceManager {
             AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to generate font json file.</red>");
         }
         this.hookCopy(resourcePack_folder);
+
     }
 
     private void loadImages(JsonArray jsonArray, File textures_file) {
