@@ -38,10 +38,8 @@ public class PlaceholderManager extends Function {
     private final HashSet<Integer> descent_fonts;
     private final HashSet<Integer> descent_unicode_fonts;
     private final HashMap<String, BackGroundText> backGroundTextMap;
-    private final HashMap<String, StaticText> stringStaticTextMap;
     private final HashMap<String, DescentText> descentTextMap;
     private final HashMap<String, DescentText> descentUnicodeMap;
-    private final HashMap<String, VanillaHud> vanillaHudMap;
     private CustomNameplates plugin;
 
     public PlaceholderManager(CustomNameplates plugin) {
@@ -50,9 +48,7 @@ public class PlaceholderManager extends Function {
         this.descent_fonts = new HashSet<>();
         this.descent_unicode_fonts = new HashSet<>();
         this.backGroundTextMap = new HashMap<>();
-        this.stringStaticTextMap = new HashMap<>();
         this.descentTextMap = new HashMap<>();
-        this.vanillaHudMap = new HashMap<>();
         this.descentUnicodeMap = new HashMap<>();
     }
 
@@ -67,9 +63,7 @@ public class PlaceholderManager extends Function {
         this.nameplatePlaceholders.unregister();
         this.descent_fonts.clear();
         this.backGroundTextMap.clear();
-        this.stringStaticTextMap.clear();
         this.descentTextMap.clear();
-        this.vanillaHudMap.clear();
         this.descent_unicode_fonts.clear();
         this.descentUnicodeMap.clear();
     }
@@ -82,19 +76,9 @@ public class PlaceholderManager extends Function {
             loadBackgroundText(backgroundSection);
         }
 
-        ConfigurationSection staticTextSection = config.getConfigurationSection("static-text");
-        if (staticTextSection != null) {
-            loadStaticText(staticTextSection);
-        }
-
         ConfigurationSection descentSection = config.getConfigurationSection("descent-text");
         if (descentSection != null) {
             loadDescentText(descentSection);
-        }
-
-        ConfigurationSection vanillaHudSection = config.getConfigurationSection("vanilla-hud");
-        if (vanillaHudSection != null) {
-            loadVanillaHud(vanillaHudSection);
         }
 
         if (plugin.getVersionHelper().isVersionNewerThan1_20() && !ConfigManager.enable1_20_Unicode) {
@@ -104,19 +88,6 @@ public class PlaceholderManager extends Function {
         ConfigurationSection descentUnicodeSection = config.getConfigurationSection("descent-unicode");
         if (descentUnicodeSection != null) {
             loadDescentUnicode(descentUnicodeSection);
-        }
-    }
-
-    private void loadVanillaHud(ConfigurationSection section) {
-        for (String key : section.getKeys(false)) {
-            vanillaHudMap.put(key, new VanillaHud(
-               PlaceholderAPI.setPlaceholders(null, section.getString(key + ".images.empty", "")) + ConfigManager.surroundWithFont(String.valueOf(OffsetFont.NEG_2.getCharacter())),
-               PlaceholderAPI.setPlaceholders(null, section.getString(key + ".images.half", "")) + ConfigManager.surroundWithFont(String.valueOf(OffsetFont.NEG_2.getCharacter())),
-               PlaceholderAPI.setPlaceholders(null, section.getString(key + ".images.full", "")) + ConfigManager.surroundWithFont(String.valueOf(OffsetFont.NEG_2.getCharacter())),
-                    section.getString(key + ".placeholder.value"),
-                    section.getString(key + ".placeholder.max-value"),
-                    section.getBoolean(key + ".reverse", true)
-            ));
         }
     }
 
@@ -131,12 +102,6 @@ public class PlaceholderManager extends Function {
         for (String key : section.getKeys(false)) {
             descent_unicode_fonts.add(8 - section.getInt(key + ".descent"));
             descentUnicodeMap.put(key, new DescentText(section.getString(key + ".text"), 8 - section.getInt(key + ".descent")));
-        }
-    }
-
-    private void loadStaticText(ConfigurationSection section) {
-        for (String key : section.getKeys(false)) {
-            stringStaticTextMap.put(key, new StaticText(section.getString(key + ".text"), section.getInt(key + ".value"), StaticText.StaticState.valueOf(section.getString(key + ".position", "left").toUpperCase(Locale.ENGLISH))));
         }
     }
 
@@ -162,16 +127,9 @@ public class PlaceholderManager extends Function {
         return backGroundTextMap.get(key);
     }
 
-    public StaticText getStaticText(String key) {
-        return stringStaticTextMap.get(key);
-    }
 
     public DescentText getDescentText(String key) {
         return descentTextMap.get(key);
-    }
-
-    public VanillaHud getVanillaHud(String key) {
-        return vanillaHudMap.get(key);
     }
 
     public HashSet<Integer> getDescent_fonts() {

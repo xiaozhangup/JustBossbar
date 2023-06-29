@@ -17,14 +17,7 @@
 
 package net.momirealms.customnameplates.utils;
 
-import dev.dejvokep.boostedyaml.YamlDocument;
-import dev.dejvokep.boostedyaml.dvs.versioning.BasicVersioning;
-import dev.dejvokep.boostedyaml.settings.dumper.DumperSettings;
-import dev.dejvokep.boostedyaml.settings.general.GeneralSettings;
-import dev.dejvokep.boostedyaml.settings.loader.LoaderSettings;
-import dev.dejvokep.boostedyaml.settings.updater.UpdaterSettings;
 import net.momirealms.customnameplates.CustomNameplates;
-import net.momirealms.customnameplates.helper.Log;
 import net.momirealms.customnameplates.object.requirements.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -37,21 +30,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class ConfigUtils {
-
-    public static void update(String file_name){
-        try {
-            YamlDocument.create(
-                    new File(CustomNameplates.getInstance().getDataFolder(), file_name),
-                    Objects.requireNonNull(CustomNameplates.getInstance().getResource(file_name)),
-                    GeneralSettings.DEFAULT,
-                    LoaderSettings.builder().setAutoUpdate(true).build(),
-                    DumperSettings.DEFAULT,
-                    UpdaterSettings.builder().setVersioning(new BasicVersioning("config-version")
-            ).build());
-        } catch (IOException e){
-            Log.warn(e.getMessage());
-        }
-    }
 
     public static YamlConfiguration getConfig(String config_name) {
         File file = new File(CustomNameplates.getInstance().getDataFolder(), config_name);

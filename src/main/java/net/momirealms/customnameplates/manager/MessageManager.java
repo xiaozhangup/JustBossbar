@@ -57,7 +57,7 @@ public class MessageManager extends Function {
 
     @Override
     public void load(){
-        YamlConfiguration config = ConfigUtils.getConfig("messages" + File.separator + ConfigManager.lang +".yml");
+        YamlConfiguration config = ConfigUtils.getConfig("messages" + File.separator + "chinese.yml");
         noPerm = config.getString("messages.no-perm");
         prefix = config.getString("messages.prefix");
         lackArgs = config.getString("messages.lack-args");

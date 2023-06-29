@@ -124,10 +124,8 @@ public class ResourceManager {
     }
 
     private void extractDefault() {
-        if (ConfigManager.extractBars) {
-            String path = "ResourcePack" + File.separator + "assets" + File.separator + "minecraft" + File.separator + "textures" + File.separator + "gui" + File.separator;
-            plugin.saveResource(path + "bars.png", true);
-        }
+        String path = "ResourcePack" + File.separator + "assets" + File.separator + "minecraft" + File.separator + "textures" + File.separator + "gui" + File.separator;
+        plugin.saveResource(path + "bars.png", true);
         setPackFormat();
     }
 
@@ -275,23 +273,12 @@ public class ResourceManager {
     }
 
     private void hookCopy(File resourcePack_folder) {
-        if (ConfigManager.itemsAdderHook){
-            try {
-                FileUtils.copyDirectory(new File(resourcePack_folder, "assets"), new File(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("ItemsAdder")).getDataFolder() + File.separator + "contents" + File.separator + "nameplates" + File.separator + "resourcepack" + File.separator + "assets") );
-            }
-            catch (IOException e){
-                e.printStackTrace();
-                AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to copy files to ItemsAdder...</red>");
-            }
+        try {
+            FileUtils.copyDirectory(new File(resourcePack_folder, "assets"), new File(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("ItemsAdder")).getDataFolder() + File.separator + "contents" + File.separator + "justbossbar" + File.separator + "resourcepack" + File.separator + "assets") );
         }
-        if (ConfigManager.oraxenHook){
-            try {
-                FileUtils.copyDirectory(new File(resourcePack_folder, "assets"), new File(Objects.requireNonNull(Bukkit.getPluginManager().getPlugin("Oraxen")).getDataFolder() + File.separator + "pack" + File.separator + "assets"));
-            }
-            catch (IOException e){
-                e.printStackTrace();
-                AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to copy files to Oraxen...</red>");
-            }
+        catch (IOException e){
+            e.printStackTrace();
+            AdventureUtils.consoleMessage("<red>[JustBossbar] Error! Failed to copy files to ItemsAdder...</red>");
         }
     }
 }

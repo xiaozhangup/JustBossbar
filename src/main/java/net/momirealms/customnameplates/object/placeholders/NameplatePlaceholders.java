@@ -62,29 +62,14 @@ public class NameplatePlaceholders extends PlaceholderExpansion {
     public String onPlaceholderRequest(Player player, String params) {
         String[] mainParam = params.split("_", 2);
         switch (mainParam[0]) {
-            case "static" -> {
-                return getStatic(mainParam[1], player);
-            }
             case "background" -> {
                 return getBackground(mainParam[1], player);
             }
             case "descent" -> {
                 return getDescent(mainParam[1], player);
             }
-            case "vanilla" -> {
-                return getVanilla(mainParam[1], player);
-            }
             case "image" -> {
                 return getImage(mainParam[1]);
-            }
-            case "offset" -> {
-                return getOffset(mainParam[1]);
-            }
-            case "time" -> {
-                return getTime(player);
-            }
-            case "checkupdate" -> {
-                return String.valueOf(!plugin.getVersionHelper().isLatest());
             }
             case "unicode" -> {
                 return getUnicodeDescent(mainParam[1], player);
@@ -92,44 +77,11 @@ public class NameplatePlaceholders extends PlaceholderExpansion {
         }
         return null;
     }
-    private String getOffset(String s) {
-        return ConfigManager.surroundWithFont(plugin.getFontManager().getOffset(Integer.parseInt(s)));
-    }
-
-    private String getTime(Player player) {
-        long time = player.getWorld().getTime();
-        String ap = time >= 6000 && time < 18000 ? " PM" : " AM";
-        int hours = (int) (time / 1000) ;
-        int minutes = (int) ((time - hours * 1000 ) * 0.06);
-        hours += 6;
-        while (hours >= 12) hours -= 12;
-        if (minutes < 10) return hours + ":0" + minutes + ap;
-        else return hours + ":" + minutes + ap;
-    }
 
     private String getImage(String param) {
         SimpleChar simpleChar = plugin.getImageManager().getImage(param);
         if (simpleChar == null) return param + " NOT FOUND";
         return ConfigManager.surroundWithFont(String.valueOf(simpleChar.getChars()));
-    }
-
-    private String getStatic(String param, Player player) {
-        StaticText staticText = placeholderManager.getStaticText(param);
-        if (staticText == null) return param + " NOT FOUND";
-        FontManager fontManager = plugin.getFontManager();
-        String parsed = PlaceholderAPI.setPlaceholders(player, staticText.text());
-        int parsedWidth = fontManager.getTotalWidth(AdventureUtils.stripAllTags(parsed));
-        if (staticText.staticState() == StaticText.StaticState.LEFT) {
-            return parsed + ConfigManager.surroundWithFont(fontManager.getOffset(staticText.value() - parsedWidth));
-        } else if (staticText.staticState() == StaticText.StaticState.RIGHT) {
-            return ConfigManager.surroundWithFont(fontManager.getOffset(staticText.value() - parsedWidth)) + parsed;
-        } else if (staticText.staticState() == StaticText.StaticState.MIDDLE) {
-            int half = (staticText.value() - parsedWidth) / 2;
-            String left = ConfigManager.surroundWithFont(fontManager.getOffset(half));
-            String right = ConfigManager.surroundWithFont(fontManager.getOffset(staticText.value() - parsedWidth - half));
-            return left + parsed + right;
-        }
-        return "";
     }
 
     private String getBackground(String param, Player player) {
@@ -156,21 +108,5 @@ public class NameplatePlaceholders extends PlaceholderExpansion {
         if (descentText == null) return param + " NOT FOUND";
         String parsed = PlaceholderAPI.setPlaceholders(player, descentText.text());
         return "<font:" + ConfigManager.namespace + ":" + "unicode_ascent_" + descentText.ascent() + ">" + parsed + "</font>";
-    }
-
-    private String getVanilla(String param, Player player) {
-        VanillaHud vanillaHud = placeholderManager.getVanillaHud(param);
-        if (vanillaHud == null) return param + " NOT FOUND";
-        double current = Double.parseDouble(PlaceholderAPI.setPlaceholders(player, vanillaHud.papi()));
-        double max = Double.parseDouble(PlaceholderAPI.setPlaceholders(player, vanillaHud.max()));
-        int point = (int) ((current / max) * 20);
-        int full_amount = point / 2;
-        int half_amount = point % 2;
-        int empty_amount = 10 - full_amount - half_amount;
-        if (vanillaHud.reverse()) {
-            return "<#FFFEFD>" + vanillaHud.empty().repeat(empty_amount) + vanillaHud.half().repeat(half_amount) + vanillaHud.full().repeat(full_amount) + "</#FFFEFD>";
-        } else {
-            return "<#FFFEFD>" + vanillaHud.full().repeat(full_amount) + vanillaHud.half().repeat(half_amount) + vanillaHud.empty().repeat(empty_amount) + "</#FFFEFD>";
-        }
     }
 }

@@ -56,7 +56,7 @@ public final class CustomNameplates extends JavaPlugin {
         protocolManager = ProtocolLibrary.getProtocolManager();
         AdventureUtils.consoleMessage("[JustBossbar] Running on <white>" + Bukkit.getVersion());
         this.fix();
-        this.versionHelper = new VersionHelper(this);
+        this.versionHelper = new VersionHelper();
         this.configManager = new ConfigManager();
         this.messageManager = new MessageManager();
         this.placeholderManager = new PlaceholderManager(this);
@@ -68,7 +68,6 @@ public final class CustomNameplates extends JavaPlugin {
         this.registerCommands();
         this.reload();
         AdventureUtils.consoleMessage("[JustBossbar] Plugin Enabled!");
-        if (ConfigManager.checkUpdate) this.versionHelper.checkUpdate();
     }
 
     @Override
