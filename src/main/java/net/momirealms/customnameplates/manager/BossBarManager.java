@@ -92,8 +92,7 @@ public class BossBarManager extends Function {
                     bossBarSection.getString("text") == null ? bossBarSection.getStringList("dynamic-text").toArray(new String[0]) : new String[]{bossBarSection.getString("text")},
                     Overlay.valueOf(bossBarSection.getString("overlay","progress").toUpperCase(Locale.ENGLISH)),
                     BarColor.valueOf(bossBarSection.getString("color","white").toUpperCase(Locale.ENGLISH)),
-                    bossBarSection.getInt("switch-interval", 5) * 20,
-                    ConfigUtils.getRequirements(bossBarSection.getConfigurationSection("conditions"))
+                    bossBarSection.getInt("switch-interval", 5) * 20
             ));
         }
         AdventureUtils.consoleMessage("[JustBossbar] Loaded <green>" + bossBars.size() + " <gray>bossbars");

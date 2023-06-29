@@ -13,19 +13,17 @@ libraries:
   - dev.dejvokep:boosted-yaml:1.3
 
 commands:
-  customnameplates:
-    usage: /customnameplates
-    aliases:
-      - nameplates
+  justbossbar:
+    usage: /justbossbar
 
 permissions:
-  nameplates.*:
+  justbossbar.*:
     description: Gives access to all nameplates commands
     children:
-      nameplates.reload: true
-      nameplates.help: true
+      justbossbar.reload: true
+      justbossbar.help: true
 
-  nameplates.reload:
+  justbossbar.reload:
     default: op
-  nameplates.help:
+  justbossbar.help:
     default: op

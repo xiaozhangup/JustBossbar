@@ -33,7 +33,7 @@ public class HelpCommand extends AbstractSubCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, List<String> args) {
-        AdventureUtils.sendMessage(sender, "<#3CB371>/nameplates");
+        AdventureUtils.sendMessage(sender, "<#3CB371>/justbossbar");
         AdventureUtils.sendMessage(sender, "  <gray>├─<white>help");
         AdventureUtils.sendMessage(sender, "  <gray>├─<white>reload");
         return true;

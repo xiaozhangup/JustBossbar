@@ -34,7 +34,6 @@ public class BossBarTask {
             this.bossBarSenders[i] = new BossBarSender(
                     bossBarConfig.interval(),
                     bossBarConfig.texts(),
-                    bossBarConfig.conditions(),
                     bossBarConfig.overlay(),
                     bossBarConfig.color(),
                     player
@@ -52,19 +51,10 @@ public class BossBarTask {
     public void start() {
         this.timerTask = Bukkit.getScheduler().runTaskTimerAsynchronously(CustomNameplates.getInstance(), () -> {
             for (BossBarSender bossBarSender : bossBarSenders) {
-                if (!bossBarSender.canSend()) {
-                    if (bossBarSender.isShown()) {
-                        bossBarSender.hide();
-                        return;
-                    }
-                }
-                else {
-                    if (bossBarSender.isShown()) {
-                        bossBarSender.update();
-                    }
-                    else {
-                        bossBarSender.show();
-                    }
+                if (bossBarSender.isShown()) {
+                    bossBarSender.update();
+                } else {
+                    bossBarSender.show();
                 }
             }
         }, 1, 1);

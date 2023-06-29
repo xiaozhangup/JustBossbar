@@ -18,7 +18,6 @@
 package net.momirealms.customnameplates.utils;
 
 import net.momirealms.customnameplates.CustomNameplates;
-import net.momirealms.customnameplates.object.requirements.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -50,24 +49,6 @@ public class ConfigUtils {
             }
         }
         return YamlConfiguration.loadConfiguration(file);
-    }
-
-    public static Requirement[] getRequirements(ConfigurationSection section) {
-        List<Requirement> requirements = new ArrayList<>();
-        if (section != null) {
-            for (String type : section.getKeys(false)) {
-                switch (type) {
-                    case "weather" -> requirements.add(new WeatherImpl(section.getStringList(type)));
-                    case "ypos" -> requirements.add(new YPosImpl(section.getStringList(type)));
-                    case "world" -> requirements.add(new WorldImpl(section.getStringList(type)));
-                    case "permission" -> requirements.add(new PermissionImpl(section.getString(type)));
-                    case "time" -> requirements.add(new TimeImpl(section.getStringList(type)));
-                    case "date" -> requirements.add(new DateImpl(new HashSet<>(section.getStringList(type))));
-                    case "papi-condition" -> requirements.add(new CustomPapiImpl(Objects.requireNonNull(section.getConfigurationSection(type)).getValues(false)));
-                }
-            }
-        }
-        return requirements.toArray(new Requirement[0]);
     }
 
     public static int rgbToDecimal(String rgba) {

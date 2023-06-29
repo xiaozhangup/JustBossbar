@@ -55,7 +55,6 @@ public final class CustomNameplates extends JavaPlugin {
         adventure = BukkitAudiences.create(this);
         protocolManager = ProtocolLibrary.getProtocolManager();
         AdventureUtils.consoleMessage("[JustBossbar] Running on <white>" + Bukkit.getVersion());
-        this.fix();
         this.versionHelper = new VersionHelper();
         this.configManager = new ConfigManager();
         this.messageManager = new MessageManager();
@@ -82,16 +81,11 @@ public final class CustomNameplates extends JavaPlugin {
 
     private void registerCommands() {
         NameplateCommand nameplateCommand = new NameplateCommand();
-        PluginCommand main = Bukkit.getPluginCommand("customnameplates");
+        PluginCommand main = Bukkit.getPluginCommand("justbossbar");
         if (main != null) {
             main.setExecutor(nameplateCommand);
             main.setTabCompleter(nameplateCommand);
         }
-    }
-
-    private void fix() {
-        //Don't delete this, a temp fix for a certain version of ProtocolLib
-        new PacketContainer(PacketType.Play.Server.SCOREBOARD_TEAM);
     }
 
     public void reload() {
@@ -102,6 +96,7 @@ public final class CustomNameplates extends JavaPlugin {
         imageManager.unload();
         fontManager.unload();
         backgroundManager.unload();
+
         configManager.load();
         messageManager.load();
         imageManager.load();

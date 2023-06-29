@@ -26,7 +26,6 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.momirealms.customnameplates.CustomNameplates;
 import net.momirealms.customnameplates.object.DynamicText;
-import net.momirealms.customnameplates.object.requirements.Requirement;
 import net.momirealms.customnameplates.utils.AdventureUtils;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.Player;
@@ -44,20 +43,18 @@ public class BossBarSender {
     private int timer;
     private int current_text_id;
     private final DynamicText[] dynamicTexts;
-    private final Requirement[] requirements;
     private final UUID uuid;
     private boolean force;
     private boolean isShown;
     private final Overlay overlay;
     private final BarColor barColor;
 
-    public BossBarSender(int switch_interval, String[] texts, Requirement[] requirements, Overlay overlay, BarColor barColor,Player player) {
+    public BossBarSender(int switch_interval, String[] texts, Overlay overlay, BarColor barColor,Player player) {
         this.player = player;
         this.switch_interval = switch_interval;
         this.overlay = overlay;
         this.barColor = barColor;
         this.uuid = UUID.randomUUID();
-        this.requirements = requirements;
         this.dynamicTexts = new DynamicText[texts.length];
         for (int i = 0; i < texts.length; i++) {
             dynamicTexts[i] = new DynamicText(player, texts[i]);
@@ -67,16 +64,6 @@ public class BossBarSender {
 
     public boolean isShown() {
         return isShown;
-    }
-
-    public boolean canSend() {
-        if (requirements.length == 0) return true;
-        for (Requirement requirement : requirements) {
-            if (!requirement.isConditionMet(player)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public void hide() {

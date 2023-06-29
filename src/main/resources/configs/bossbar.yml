@@ -4,5 +4,3 @@ basic_info_hud:
   dynamic-text:
     - '%nameplates_background_player%'
   switch-interval: 15
-  conditions:
-    permission: bossbar.show

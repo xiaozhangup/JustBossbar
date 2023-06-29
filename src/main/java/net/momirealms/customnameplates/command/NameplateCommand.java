@@ -23,7 +23,7 @@ public class NameplateCommand extends AbstractMainCommand {
 
 
     public NameplateCommand() {
-        super("nameplates");
+        super("justbossbar");
         regDefaultSubCommands();
     }
 
